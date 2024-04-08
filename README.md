@@ -188,3 +188,5 @@ To build the website, just run:
 ```bash
 npm run build
 ```
+
+TODO - fix workflow_dispatch trigger so we can manually run a docs deploy
