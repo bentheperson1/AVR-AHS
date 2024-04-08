@@ -59,7 +59,7 @@ pygmentsStyle = "monokai"
     url_latest_version = "https://the-avr.github.io/AVR-2022"
 
     # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-    github_repo = "https://github.com/The-AVR/AVR-2022"
+    github_repo = "https://the-avr.github.io/AVR-Docs/"
     # Discourse base URL
     discourse_forums          = "https://www.forum.theavr.org"
     # Discourse category to pre-assign to issues
