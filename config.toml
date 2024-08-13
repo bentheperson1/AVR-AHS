@@ -3,7 +3,7 @@
 # For local development, a single / is usually desired.
 baseURL = "/"
 
-title           = "AVR Documentation"
+title           = "Bell AVR Documentation"
 enableRobotsTXT = true
 themesDir       = "node_modules"
 theme           = "docsy"
