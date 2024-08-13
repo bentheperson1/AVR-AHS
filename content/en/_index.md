@@ -46,5 +46,5 @@ A good kit that contains most of the tools that you will need can be found here:
 
 - [Game Manual](https://irp.cdn-website.com/91d957a4/files/uploaded/2024_AVR_Game_Manual_Infrastructure_Challenge_20240809.pdf)
 - [Game Video](https://www.youtube.com/watch?v=YGcX5J9Wb7E)
-- [Bell AVR Forum](https://forum.theavr.org/)
+- [AVR Forum](https://forum.theavr.org/)
 - [Software Source Code](https://github.com/bellflight/AVR-2022)
