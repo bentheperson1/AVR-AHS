@@ -12,6 +12,7 @@ from app.tabs.pcc_tester import PCCTesterWidget
 from app.tabs.thermal_view_control import ThermalViewControlWidget
 from app.tabs.vmc_control import VMCControlWidget
 from app.tabs.vmc_telemetry import VMCTelemetryWidget
+from app.tabs.gesture_gimbal import GestureGunneryWidget
 from loguru import logger
 from PySide6 import QtCore, QtGui, QtWidgets
 
@@ -101,7 +102,7 @@ class MainWindow(QtWidgets.QWidget):
         super().__init__()
 
         set_icon(self)
-        self.setWindowTitle("AVR GUI")
+        self.setWindowTitle("AVR GUI - Horsepower")
 
         self.mqtt_connected = False
         self.serial_connected = False
@@ -166,6 +167,17 @@ class MainWindow(QtWidgets.QWidget):
         self.tabs.addTab(self.vmc_control_widget, self.vmc_control_widget.windowTitle())
 
         self.vmc_control_widget.emit_message.connect(
+            self.main_connection_widget.mqtt_connection_widget.mqtt_client.publish
+        )
+
+        # gesture control widget
+
+        self.gesture_widget = GestureGunneryWidget(self)
+        self.gesture_widget.build()
+        self.gesture_widget.pop_in.connect(self.tabs.pop_in)
+        self.tabs.addTab(self.gesture_widget, self.gesture_widget.windowTitle())
+
+        self.gesture_widget.emit_message.connect(
             self.main_connection_widget.mqtt_connection_widget.mqtt_client.publish
         )
 
@@ -245,19 +257,20 @@ class MainWindow(QtWidgets.QWidget):
             self.mqtt_logger_widget,
             self.vmc_control_widget,
             self.vmc_telemetry_widget,
+            self.gesture_widget,
             self.thermal_view_control_widget,
             self.moving_map_widget,
             self.autonomy_widget,
         ]
 
         # disable/enable widgets
-        for widget in widgets:
-            idx = self.tabs.indexOf(widget)
-            self.tabs.setTabEnabled(idx, self.mqtt_connected)
-            if not self.mqtt_connected:
-                self.tabs.setTabToolTip(idx, "MQTT not connected")
-            else:
-                self.tabs.setTabToolTip(idx, "")
+        # for widget in widgets:
+        #     idx = self.tabs.indexOf(widget)
+        #     self.tabs.setTabEnabled(idx, self.mqtt_connected)
+        #     if not self.mqtt_connected:
+        #         self.tabs.setTabToolTip(idx, "MQTT not connected")
+        #     else:
+        #         self.tabs.setTabToolTip(idx, "")
 
         # clear widgets to a starting state
         if not self.mqtt_connected:
@@ -294,7 +307,9 @@ class MainWindow(QtWidgets.QWidget):
 
 def main() -> None:
     # create Qt Application instance
-    app = QtWidgets.QApplication()
+    sys.argv += ['-platform', 'windows:darkmode=2']
+    app = QtWidgets.QApplication(sys.argv)
+    app.setStyle('Fusion')
 
     # create the main window
     w = MainWindow()

@@ -50,8 +50,18 @@ class VMCControlWidget(BaseTabWidget):
         blue_led_button.clicked.connect(lambda: self.set_led((255, 0, 0, 255)))  # type: ignore
         led_layout.addWidget(blue_led_button)
 
+        purple_led_button = QtWidgets.QPushButton("Purple")
+        purple_led_button.setStyleSheet("background-color: purple; color: white")
+        purple_led_button.clicked.connect(lambda: self.set_led((255, 0, 120, 255)))  # type: ignore
+        led_layout.addWidget(purple_led_button)
+
+        yellow_led_button = QtWidgets.QPushButton("Yellow")
+        yellow_led_button.setStyleSheet("background-color: yellow; color: black")
+        yellow_led_button.clicked.connect(lambda: self.set_led((20, 220, 255, 255)))  # type: ignore
+        led_layout.addWidget(yellow_led_button)
+
         clear_led_button = QtWidgets.QPushButton("Clear")
-        clear_led_button.setStyleSheet("background-color: white")
+        clear_led_button.setStyleSheet("background-color: white; color: black")
         clear_led_button.clicked.connect(lambda: self.set_led((0, 0, 0, 0)))  # type: ignore
         led_layout.addWidget(clear_led_button)
 
@@ -59,7 +69,7 @@ class VMCControlWidget(BaseTabWidget):
 
         # ==========================
         # Servos
-        self.number_of_servos = 4
+        self.number_of_servos = 8
         self.servo_labels: List[QtWidgets.QLabel] = []
 
         servos_groupbox = QtWidgets.QGroupBox("Servos")
