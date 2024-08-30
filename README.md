@@ -1,9 +1,3 @@
-# AVR-2022
-
-## Project Management
-
-For Bell employees and partners, work items are tracked on [Trello](https://trello.com/bellavr).
-
 ## Structure
 
 - `.github`: GitHub Actions files
@@ -44,7 +38,7 @@ Refer to individual module README files for specific instructions.
 Clone the repository with submodules:
 
 ```bash
-git clone --recurse-submodules https://github.com/bellflight/AVR-2022
+git clone --recurse-submodules https://github.com/bentheperson1/AVR-AHS
 cd AVR-2022
 ```
 
