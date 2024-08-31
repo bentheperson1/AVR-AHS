@@ -469,7 +469,7 @@ class ThermalViewControlWidget(BaseTabWidget):
 		pixel_ints = list(bytearray(asbytes))
 
 		average = sum(pixel_ints) / len(pixel_ints)
-		if average >= 20:
+		if average >= 26:
 			print("Thermal Threshold Exceeded!")
 
 			self.send_message("avr/pcm/set_temp_color", AvrPcmSetTempColorPayload(wrgb=(255,255,255,255), time=2))
@@ -477,7 +477,7 @@ class ThermalViewControlWidget(BaseTabWidget):
 		# find lowest temp
 		lowest = min(pixel_ints)
 		self.viewer.last_lowest_temp = lowest
-
+		
 		# update the canvase
 		# pixel_ints = data
 		self.viewer.update_canvas(pixel_ints)
