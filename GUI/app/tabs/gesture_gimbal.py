@@ -59,7 +59,7 @@ class GestureGunneryWidget(BaseTabWidget):
 		self.gimbal_pos_set = False
 
 		self.deadzone = 48
-		self.mode = self.ControlMode.INACTIVE
+		self.mode = self.ControlMode.SERVO
 		self.laser_on = False
 		self.laser_activated_once = True
 		self.has_activated = False
@@ -80,12 +80,12 @@ class GestureGunneryWidget(BaseTabWidget):
 		self.servo_ports = {
 			0: "Sphero",
 			1: "Water Drop 1",
-			4: "Water Drop 2",
+			2: "Water Drop 2",
 			5: "Vechicle Drop"
 		}
 
 		self.servos_active = [False, False, False, False]
-		self.servo_activate_set_time = 20
+		self.servo_activate_set_time = 3
 		self.servo_activate_timer = [0, 0, 0, 0]
 
 		self.depth_vary = 6000
@@ -181,7 +181,7 @@ class GestureGunneryWidget(BaseTabWidget):
 							is_active = False
 
 							if found_landmarks and self.gesture.check_landmark_handedness(found_landmarks, "Right") and bounding_boxes:
-								_, landmarks_touching = self.gesture.length_between_landmarks(frame, 0, (i * 4) + 8)
+								_, landmarks_touching = self.gesture.length_between_landmarks(frame, 0, (i * 4) + 8, length_threshold=80)
 
 								if landmarks_touching:
 									self.servo_activate_timer[i] += 1
