@@ -15,8 +15,12 @@ from PySide6 import QtCore, QtWidgets
 
 from ..lib.color import smear_color, wrap_text
 from ..lib.widgets import DisplayLineEdit, StatusLabel
+from ..lib.config import *
 from .base import BaseTabWidget
 
+from playsound import playsound
+
+import os
 
 class VMCTelemetryWidget(BaseTabWidget):
     # This widget provides a minimal QGroundControl-esque interface.
@@ -27,6 +31,9 @@ class VMCTelemetryWidget(BaseTabWidget):
         super().__init__(parent)
 
         self.setWindowTitle("VMC Telemetry")
+        self.battery_cutoff_amt = 45
+        self.battery_cutoff_sound_timer_set = 40
+        self.battery_cutoff_sound_timer = self.battery_cutoff_sound_timer_set
 
     def build(self) -> None:
         """
@@ -237,6 +244,16 @@ class VMCTelemetryWidget(BaseTabWidget):
         self.battery_percent_bar.setValue(int(soc))
         self.battery_voltage_label.setText(f"{round(payload['voltage'], 4)} Volts")
 
+        if int(soc) <= self.battery_cutoff_amt:
+            print("POWER OFF DRONE. BATTERY BELOW CRITICAL POINT.")
+
+            self.battery_cutoff_sound_timer -= 1
+
+            if self.battery_cutoff_sound_timer <= 0:
+                self.battery_cutoff_sound_timer = self.battery_cutoff_sound_timer_set
+
+                playsound(os.path.join(DATA_DIR, "assets", "SwapBattery.mp3"), False)
+        
         # this is required to change the progress bar color as the value changes
         color = smear_color(
             (135, 0, 16), (11, 135, 0), value=soc, min_value=0, max_value=100
