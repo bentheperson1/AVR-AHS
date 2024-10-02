@@ -78,15 +78,16 @@ class GestureGunneryWidget(BaseTabWidget):
 		self.pitch_port = 3
 
 		self.servo_ports = {
-			0: "Sphero",
+			2: "Conex",
 			1: "Water Drop 1",
-			2: "Water Drop 2",
+			0: "Water Drop 2",
 			5: "Vechicle Drop"
 		}
 
 		self.servos_active = [False, False, False, False]
-		self.servo_activate_set_time = 3
-		self.servo_activate_timer = [0, 0, 0, 0]
+		self.servo_activated = [False, False, False, False]
+
+		self.touch_active_thres = 160
 
 		self.depth_vary = 6000
 		self.current_palm_area = -1
@@ -181,17 +182,15 @@ class GestureGunneryWidget(BaseTabWidget):
 							is_active = False
 
 							if found_landmarks and self.gesture.check_landmark_handedness(found_landmarks, "Right") and bounding_boxes:
-								_, landmarks_touching = self.gesture.length_between_landmarks(frame, 0, (i * 4) + 8, length_threshold=80)
+								_, landmarks_touching = self.gesture.length_between_landmarks(frame, 0, (i * 4) + 8, length_threshold=self.touch_active_thres)
 
 								if landmarks_touching:
-									self.servo_activate_timer[i] += 1
-
-									if self.servo_activate_timer[i] > self.servo_activate_set_time and not is_active:
+									if not self.servo_activated[i]:
 										self.servos_active[i] = not self.servos_active[i]
-										self.servo_activate_timer[i] = 0
+										self.servo_activated[i] = True
 										is_active = True
 								else:
-									self.servo_activate_timer[i] = 0
+									self.servo_activated[i] = False
 
 								active_text = "ON" if self.servos_active[i] else "OFF"
 								servo_index = list(self.servo_ports.keys())[i]
@@ -200,6 +199,7 @@ class GestureGunneryWidget(BaseTabWidget):
 								text_pos = (bounding_boxes[0][1], bounding_boxes[0][2] - (i * 32) - 32)
 
 								cv2.putText(frame, f"{servo_text}: {active_text}", text_pos, cv2.FONT_HERSHEY_SIMPLEX, 0.85, (0, 0, 0), 8, cv2.LINE_AA, False)
+								
 								cv2.putText(frame, f"{servo_text}: {active_text}", text_pos, cv2.FONT_HERSHEY_SIMPLEX, 0.85, (255, 255, 255), 2, cv2.LINE_AA, False)
 
 								if is_active:
@@ -287,7 +287,7 @@ class GestureGunneryWidget(BaseTabWidget):
 					self.image_frame.clear()
 					self.frame_updated.emit(QtGui.QPixmap())
 
-				time.sleep(0.005)
+				time.sleep(0.002)
 
 	frame_updated = QtCore.Signal(QtGui.QPixmap)
 

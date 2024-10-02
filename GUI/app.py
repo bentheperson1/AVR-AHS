@@ -263,7 +263,7 @@ class MainWindow(QtWidgets.QWidget):
             self.autonomy_widget,
         ]
 
-        # disable/enable widgets
+        #disable/enable widgets
         # for widget in widgets:
         #     idx = self.tabs.indexOf(widget)
         #     self.tabs.setTabEnabled(idx, self.mqtt_connected)

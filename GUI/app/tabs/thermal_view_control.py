@@ -48,10 +48,12 @@ class ThermalView(QtWidgets.QWidget):
 		self.pixel_height = self.height_ / self.pixels_y
 
 		# low range of the sensor (this will be blue on the screen)
-		self.MINTEMP = 20.0
+		self.MINTEMP = 22.0
 
 		# high range of the sensor (this will be red on the screen)
 		self.MAXTEMP = 32.0
+
+		self.TEMP_THRESHOLD = 23.5
 
 		# last lowest temp from camera
 		self.last_lowest_temp = 999.0
@@ -96,9 +98,10 @@ class ThermalView(QtWidgets.QWidget):
 		# need a bit of padding for the edges of the canvas
 		self.setFixedSize(self.width_ + 50, self.height_ + 50)
 
-	def set_temp_range(self, mintemp: float, maxtemp: float) -> None:
+	def set_temp_range(self, mintemp: float, maxtemp: float, temp_thres: float) -> None:
 		self.MINTEMP = mintemp
 		self.MAXTEMP = maxtemp
+		self.TEMP_THRESHOLD = temp_thres
 
 	def set_calibrted_temp_range(self) -> None:
 		self.MINTEMP = self.last_lowest_temp + 0.0
@@ -351,6 +354,10 @@ class ThermalViewControlWidget(BaseTabWidget):
 		temp_range_layout.addRow(QtWidgets.QLabel("Max Temp:"), self.temp_max_line_edit)
 		self.temp_max_line_edit.setText(str(self.viewer.MAXTEMP))
 
+		self.temp_avg_thres_edit = DoubleLineEdit()
+		temp_range_layout.addRow(QtWidgets.QLabel("Avg Temp Threshold:"), self.temp_avg_thres_edit)
+		self.temp_avg_thres_edit.setText(str(self.viewer.TEMP_THRESHOLD))
+
 		set_temp_range_button = QtWidgets.QPushButton("Set Temp Range")
 		temp_range_layout.addWidget(set_temp_range_button)
 
@@ -365,6 +372,7 @@ class ThermalViewControlWidget(BaseTabWidget):
 			lambda: self.viewer.set_temp_range(
 				float(self.temp_min_line_edit.text()),
 				float(self.temp_max_line_edit.text()),
+				float(self.temp_avg_thres_edit.text()),
 			)
 		)
 
@@ -469,7 +477,8 @@ class ThermalViewControlWidget(BaseTabWidget):
 		pixel_ints = list(bytearray(asbytes))
 
 		average = sum(pixel_ints) / len(pixel_ints)
-		if average >= 26:
+		
+		if average >= self.viewer.TEMP_THRESHOLD:
 			print("Thermal Threshold Exceeded!")
 
 			self.send_message("avr/pcm/set_temp_color", AvrPcmSetTempColorPayload(wrgb=(255,255,255,255), time=2))
