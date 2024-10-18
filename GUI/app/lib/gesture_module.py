@@ -21,8 +21,8 @@ class GestureRecognizer:
     def __init__(self):
         try:
             self.num_hands = 2
-            self.tracking_confidence = 0.6
-            self.detection_confidence = 0.3
+            self.tracking_confidence = 0.75
+            self.detection_confidence = 0.75
             self.smoothing_factor = 0.4  # Smoothing factor for landmarks (0 to 1)
 
             self.hand_gestures_dict = {

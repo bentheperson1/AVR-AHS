@@ -481,7 +481,7 @@ class ThermalViewControlWidget(BaseTabWidget):
 		if average >= self.viewer.TEMP_THRESHOLD:
 			print("Thermal Threshold Exceeded!")
 
-			self.send_message("avr/pcm/set_temp_color", AvrPcmSetTempColorPayload(wrgb=(255,255,255,255), time=2))
+			self.send_message("avr/pcm/set_temp_color", AvrPcmSetTempColorPayload(wrgb=(255,255,255,255), time=0.5))
 
 		# find lowest temp
 		lowest = min(pixel_ints)

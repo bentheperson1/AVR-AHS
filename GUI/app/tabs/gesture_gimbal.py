@@ -287,7 +287,7 @@ class GestureGunneryWidget(BaseTabWidget):
 					self.image_frame.clear()
 					self.frame_updated.emit(QtGui.QPixmap())
 
-				time.sleep(0.002)
+				time.sleep(0.005)
 
 	frame_updated = QtCore.Signal(QtGui.QPixmap)
 

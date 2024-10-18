@@ -2,7 +2,9 @@
 
 Make sure you're connected to DEXI's wifi network!
 
-1. Launch the container from the base node-red image 
+`docker run -it -p 1880:1880 -v ${PWD}/flows:/data --name dexi-node-red droneblocks/dexi-node-red:latest`
+
+1. Launch the container from the base node-red image
 `docker run -it -p 1880:1880 -v ${PWD}/flows:/data -v ${PWD}/node-red-dexi:/node-red-dexi --name dexi-node-red nodered/node-red:latest-minimal`
 
 2. Connect to the container

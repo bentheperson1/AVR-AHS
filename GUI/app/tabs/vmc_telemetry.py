@@ -18,7 +18,7 @@ from ..lib.widgets import DisplayLineEdit, StatusLabel
 from ..lib.config import *
 from .base import BaseTabWidget
 
-from playsound import playsound
+import pygame
 
 import os
 
@@ -31,8 +31,8 @@ class VMCTelemetryWidget(BaseTabWidget):
         super().__init__(parent)
 
         self.setWindowTitle("VMC Telemetry")
-        self.battery_cutoff_amt = 72
-        self.battery_cutoff_sound_timer_set = 40
+        self.battery_cutoff_amt = 45
+        self.battery_cutoff_sound_timer_set = 1
         self.battery_cutoff_sound_timer = self.battery_cutoff_sound_timer_set
 
     def build(self) -> None:
@@ -231,6 +231,12 @@ class VMCTelemetryWidget(BaseTabWidget):
             f"{payload['num_satellites']} visible, {payload['fix_type']}"
         )
 
+    def play_sound(self, sound, pan=[1.0,1.0]):
+        sound = pygame.mixer.Sound(sound)
+        channel = pygame.mixer.find_channel()
+        channel.set_volume(pan[0], pan[1])
+        channel.play(sound)
+
     def update_battery(self, payload: AvrFcmBatteryPayload) -> None:
         """
         Update battery information
@@ -247,12 +253,7 @@ class VMCTelemetryWidget(BaseTabWidget):
         if int(soc) <= self.battery_cutoff_amt:
             print("POWER OFF DRONE. BATTERY BELOW CRITICAL POINT.")
 
-            self.battery_cutoff_sound_timer -= 1
-
-            if self.battery_cutoff_sound_timer <= 0:
-                self.battery_cutoff_sound_timer = self.battery_cutoff_sound_timer_set
-
-                playsound(os.path.join(DATA_DIR, "assets", "SwapBattery.mp3"), False)
+            self.play_sound("SwapBattery.mp3", False)
         
         # this is required to change the progress bar color as the value changes
         color = smear_color(
