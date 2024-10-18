@@ -2,7 +2,7 @@
     {
         "id": "041aa9b138cce992",
         "type": "tab",
-        "label": "DEXI LED Ring",
+        "label": "DEXI Main",
         "disabled": false,
         "info": "",
         "env": []
@@ -29,7 +29,8 @@
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "darkTheme": {
                 "default": "#097479",
@@ -175,8 +176,8 @@
         "type": "ros2-service-call",
         "z": "041aa9b138cce992",
         "server": "70cd061dbb6946e5",
-        "x": 800,
-        "y": 200,
+        "x": 820,
+        "y": 380,
         "wires": [
             []
         ]
@@ -273,7 +274,7 @@
         "z": "041aa9b138cce992",
         "name": "",
         "group": "9ec22e3e32d6c2fb",
-        "order": 0,
+        "order": 3,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -348,6 +349,165 @@
         "wires": [
             [
                 "88589ed5def95974"
+            ]
+        ]
+    },
+    {
+        "id": "b56798a36a6b5cd5",
+        "type": "ui_led",
+        "z": "041aa9b138cce992",
+        "order": 4,
+        "group": "9ec22e3e32d6c2fb",
+        "width": "6",
+        "height": "6",
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 790,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "0973e954610d27c4",
+        "type": "change",
+        "z": "041aa9b138cce992",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 600,
+        "wires": [
+            [
+                "b56798a36a6b5cd5"
+            ]
+        ]
+    },
+    {
+        "id": "9c53d26532fc6fdc",
+        "type": "ros2-subscribe",
+        "z": "041aa9b138cce992",
+        "server": "70cd061dbb6946e5",
+        "topicname": "",
+        "messagetype": "",
+        "x": 420,
+        "y": 600,
+        "wires": [
+            [
+                "0973e954610d27c4"
+            ]
+        ]
+    },
+    {
+        "id": "6de0ed27705a8adb",
+        "type": "ui_button",
+        "z": "041aa9b138cce992",
+        "name": "",
+        "group": "9ec22e3e32d6c2fb",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Laser On",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 400,
+        "y": 440,
+        "wires": [
+            [
+                "66250426d8763936"
+            ]
+        ]
+    },
+    {
+        "id": "1d841446b357db92",
+        "type": "ui_button",
+        "z": "041aa9b138cce992",
+        "name": "",
+        "group": "9ec22e3e32d6c2fb",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Laser Off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 400,
+        "y": 500,
+        "wires": [
+            [
+                "1691fd15c0cece96"
+            ]
+        ]
+    },
+    {
+        "id": "66250426d8763936",
+        "type": "write-gpio",
+        "z": "041aa9b138cce992",
+        "pinnumber": 21,
+        "pinstate": "true",
+        "stampheader": false,
+        "x": 560,
+        "y": 440,
+        "wires": [
+            [
+                "4115696c8d3095b6"
+            ]
+        ]
+    },
+    {
+        "id": "1691fd15c0cece96",
+        "type": "write-gpio",
+        "z": "041aa9b138cce992",
+        "pinnumber": 21,
+        "pinstate": "false",
+        "stampheader": false,
+        "x": 560,
+        "y": 500,
+        "wires": [
+            [
+                "4115696c8d3095b6"
             ]
         ]
     }
