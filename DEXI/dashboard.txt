@@ -1,0 +1,11 @@
+- Manual LEDS:
+	- Red
+	- Blue
+	- Green
+	- White
+	- Off
+- Camera feed
+- Fire laser 5 times button
+- Laser on
+- Laser Off
+- IR Status

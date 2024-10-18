@@ -139,7 +139,7 @@ class GestureGunneryWidget(BaseTabWidget):
 					image.flags.writeable = True
 					image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-					condition = np.stack((results.segmentation_mask,) * 3, axis=-1) > 0.15
+					condition = np.stack((results.segmentation_mask,) * 3, axis=-1) > 0.6
 
 					if bg_image is None:
 						bg_image = np.zeros(image.shape, dtype=np.uint8)

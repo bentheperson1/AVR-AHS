@@ -31,7 +31,7 @@ class VMCTelemetryWidget(BaseTabWidget):
         super().__init__(parent)
 
         self.setWindowTitle("VMC Telemetry")
-        self.battery_cutoff_amt = 45
+        self.battery_cutoff_amt = 72
         self.battery_cutoff_sound_timer_set = 40
         self.battery_cutoff_sound_timer = self.battery_cutoff_sound_timer_set
 

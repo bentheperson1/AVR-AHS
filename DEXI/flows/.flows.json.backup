@@ -1,0 +1,155 @@
+[
+    {
+        "id": "041aa9b138cce992",
+        "type": "tab",
+        "label": "DEXI LED Ring",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "70cd061dbb6946e5",
+        "type": "ros2-websocket-server",
+        "url": "ws://192.168.4.1:9090"
+    },
+    {
+        "id": "2ae24e244747ecc1",
+        "type": "inject",
+        "z": "041aa9b138cce992",
+        "name": "green led",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "54379e4881ae5fcb"
+            ]
+        ]
+    },
+    {
+        "id": "54379e4881ae5fcb",
+        "type": "led",
+        "z": "041aa9b138cce992",
+        "name": "",
+        "color": "green",
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "4115696c8d3095b6"
+            ]
+        ]
+    },
+    {
+        "id": "4115696c8d3095b6",
+        "type": "ros2-service-call",
+        "z": "041aa9b138cce992",
+        "server": "70cd061dbb6946e5",
+        "x": 780,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "386f2d09ebe396fa",
+        "type": "inject",
+        "z": "041aa9b138cce992",
+        "name": "red led",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 390,
+        "y": 260,
+        "wires": [
+            [
+                "6730ce110402d227"
+            ]
+        ]
+    },
+    {
+        "id": "6730ce110402d227",
+        "type": "led",
+        "z": "041aa9b138cce992",
+        "name": "",
+        "color": "red",
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "4115696c8d3095b6"
+            ]
+        ]
+    },
+    {
+        "id": "dba37ed07e262b7e",
+        "type": "inject",
+        "z": "041aa9b138cce992",
+        "name": "blue led",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "88589ed5def95974"
+            ]
+        ]
+    },
+    {
+        "id": "88589ed5def95974",
+        "type": "led",
+        "z": "041aa9b138cce992",
+        "name": "",
+        "color": "blue",
+        "x": 590,
+        "y": 320,
+        "wires": [
+            [
+                "4115696c8d3095b6"
+            ]
+        ]
+    }
+]
